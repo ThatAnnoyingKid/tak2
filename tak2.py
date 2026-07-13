@@ -1,7 +1,7 @@
 import discord
 import os
 
-from message_handeling import format_message
+from christian import has_bad_words
 
 intents = discord.Intents.default()
 intents.message_content = True
@@ -19,11 +19,10 @@ async def on_message(message):
     if message.author == client.user:
         return
 
-    if message.content.startswith('$'):
-        await message.channel.send('Hello!')
-
     try: # I am poor with only one monitor so I can see when I want to kill myself faster this way
-         await message.channel.send(format_message(message))
+         judgement = has_bad_words(message)
+         if judgement:
+              await message.channel.send(file=discord.File('christan.png'))
     except Exception as e:
         await message.channel.send(e)
 
